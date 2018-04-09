@@ -1,5 +1,5 @@
 <html>
-<?php 
+<?php
 	session_start();
 	echo file_get_contents("defaultHead.html");
 	include_once("connection.php");
@@ -7,7 +7,7 @@
 
 <body>
     <!-- Header -->
-	<?php 
+	<?php
 		include("defaultHeader.php");
 		include("defaultAuthCheck.php");
 	?>
@@ -18,15 +18,15 @@
         <br />
         <br />
         <div class="mui-container">
-			<?php 
+			<?php
 				$result = mysqli_query($conn,"SELECT * FROM shipments WHERE company = $_SESSION[company]");
-				
+
 				if (mysqli_num_rows($result) == 0){
-					echo "No shipments found";
+					echo "<h1><b>No shipments found</b></h1>";
 					return;
 				}
-				
-				echo " 
+
+				echo "
 				<table class='mui-table'>
 					<thead>
 						<tr>
@@ -43,7 +43,7 @@
 						</tr>
 					</thead>
 					<tbody>";
-				
+
 				foreach ($result as $row){
 					$driver = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM drivers WHERE id = $row[driver]"));
 					$truck = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM trucks WHERE id = $row[truck]"));
@@ -63,14 +63,15 @@
 					echo "<td>false</td>";
 					echo "</tr>";
 				}
+
+				echo "</tbody>
+            		</table>";
 			?>
-                </tbody>
-            </table>
         </div>
     </div>
 
     <!-- Footer -->
-	<?php 
+	<?php
 		echo file_get_contents("defaultFooter.html");
 	?>
 </body>
