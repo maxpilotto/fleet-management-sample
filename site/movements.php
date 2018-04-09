@@ -29,6 +29,7 @@
 					<thead>
 						<tr>
 							<th>Date</th>
+							<th>Time</th>
 							<th>Position</th>
 							<th>Speed</th>
 							<th>Place</th>
@@ -41,6 +42,7 @@
 
 					echo "<tr>";
 					echo "<td>$row[movDate]</td>";
+					echo "<td>$row[movTime]</td>";
 					echo "<td> <a href='https://maps.google.com/?q=$row[latitude],$row[longitude]'>$row[latitude];$row[longitude]</a> </td>";
 					echo "<td>$row[speed]</td>";
 					echo "<td>$row[place]</td>";

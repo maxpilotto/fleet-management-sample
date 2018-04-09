@@ -34,12 +34,13 @@
 							<th>Driver</th>
 							<th>Start date</th>
 							<th>End date</th>
+							<th>Start time</th>
+							<th>End time</th>
 							<th>Destination</th>
 							<th>Last position</th>
 							<th>Movements</th>
 							<th>Issues</th>
 							<th>Completed</th>
-							<th>Delayed</th>
 						</tr>
 					</thead>
 					<tbody>";
@@ -49,18 +50,32 @@
 					$truck = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM trucks WHERE id = $row[truck]"));
 					$movements = mysqli_query($conn,"SELECT * FROM movements WHERE shipment = $row[id] ORDER BY movDate DESC");
 					$issues = mysqli_query($conn,"SELECT * FROM issues WHERE shipment = $row[id]");
+					$lastMovement = mysqli_fetch_assoc($movements);
+
+					$completed = 'false';
+					$endDate = $row["endDate"];
+					$endTime = $row["endTime"];
+					$lastDate = $lastMovement["movDate"];
+					$lastTime = $lastMovement["movTime"];
+
+					if ($lastDate >= $endDate){
+						if ($lastTime >= $endTime){
+							$completed = 'true';
+						}
+					}
 
 					echo "<tr>";
 					echo "<td><a href='truckInfo.php?id=$truck[id]'>$truck[brand], $truck[model]</a></td>";
-					echo "<td><a href='driverInfo.php?id=$driver[id]'>$driver[name], $driver[surname]</a></td>";
+					echo "<td><a href='drivers.php?id=$driver[id]'>$driver[name], $driver[surname]</a></td>";
 					echo "<td>$row[startDate]</td>";
 					echo "<td>$row[endDate]</td>";
+					echo "<td>$row[startTime]</td>";
+					echo "<td>$row[endTime]</td>";
 					echo "<td>$row[destination]</td>";
-					echo "<td>".mysqli_fetch_assoc($movements)["place"]."</td>";
+					echo "<td>".$lastMovement["place"]."</td>";
 					echo "<td><a href='movements.php?id=$row[id]'>".mysqli_num_rows($movements)."</a></td>";
 					echo "<td><a href='issues.php?id=$row[id]'>".mysqli_num_rows($issues)."</a></td>";
-					echo "<td>false</td>";
-					echo "<td>false</td>";
+					echo "<td>$completed</td>";
 					echo "</tr>";
 				}
 
