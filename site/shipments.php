@@ -27,7 +27,7 @@
 				}
 
 				echo "
-				<table class='mui-table'>
+				<table class='mui-table mui-table--bordered'>
 					<thead>
 						<tr>
 							<th>Truck</th>
@@ -41,6 +41,7 @@
 							<th>Movements</th>
 							<th>Issues</th>
 							<th>Completed</th>
+							<th>Chat</th>
 						</tr>
 					</thead>
 					<tbody>";
@@ -51,18 +52,7 @@
 					$movements = mysqli_query($conn,"SELECT * FROM movements WHERE shipment = $row[id] ORDER BY movDate DESC");
 					$issues = mysqli_query($conn,"SELECT * FROM issues WHERE shipment = $row[id]");
 					$lastMovement = mysqli_fetch_assoc($movements);
-
-					$completed = 'false';
-					$endDate = $row["endDate"];
-					$endTime = $row["endTime"];
-					$lastDate = $lastMovement["movDate"];
-					$lastTime = $lastMovement["movTime"];
-
-					if ($lastDate >= $endDate){
-						if ($lastTime >= $endTime){
-							$completed = 'true';
-						}
-					}
+					$status = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM shipmentstatuses WHERE id = $row[status]"));
 
 					echo "<tr>";
 					echo "<td><a href='truckInfo.php?id=$truck[id]'>$truck[brand], $truck[model]</a></td>";
@@ -75,7 +65,14 @@
 					echo "<td>".$lastMovement["place"]."</td>";
 					echo "<td><a href='movements.php?id=$row[id]'>".mysqli_num_rows($movements)."</a></td>";
 					echo "<td><a href='issues.php?id=$row[id]'>".mysqli_num_rows($issues)."</a></td>";
-					echo "<td>$completed</td>";
+					echo "<td>$status[name]</td>";
+
+					if ($row["status"] != "1"){
+						echo "<td><a href='chat.php?id=$row[id]'>Open</a></td>";
+					}else{
+						echo "<td>Closed</td>";
+					}
+
 					echo "</tr>";
 				}
 

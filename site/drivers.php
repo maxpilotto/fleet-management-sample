@@ -51,10 +51,19 @@ include_once("connection.php");
                 <tbody>";
 
                 foreach($result as $row){
+					$shipments = mysqli_query($conn,"SELECT * FROM shipments WHERE driver = $row[id]");
+					$toDo = 0;
+
+					foreach($shipments as $shipment){
+						if ($shipment["status"] == '2' or $shipment["status"] == 4){
+							$toDo++;
+						}
+					}
+
                     echo "<tr>";
                     echo "<td>$row[name]</td>";
                     echo "<td>$row[surname]</td>";
-                    echo "<td>null</td>";
+                    echo "<td>$toDo</td>";
                     echo "</tr>";
                 }
 
