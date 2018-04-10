@@ -5,14 +5,13 @@
 	include_once("connection.php");
 ?>
 
-
 <body>
 	<!-- Header -->
 	<header class="mui-appbar mui--z1">
 		<div class="mui-container">
 			<table>
 				<tr class="mui--appbar-height">
-					<td class="mui--text-title">Unauthorized access</td>
+					<td class="mui--text-title">404 Page not found</td>
 					<td class="mui--text-right">
 						<ul class="mui-list--inline mui--text-body2">
 						</ul>
@@ -27,11 +26,13 @@
 		<div class="mui--appbar-height"></div>
         <br />
         <br />
-        <h1>Waaaaaait a second!! How did you end up here ? Get out NOW!!</h1>
+        <img src="img/owk.jpg" />
+        <br />
+        <h1>This is not the page you are looking for...</h1>
         <script>
             setTimeout(function(){
                 document.location.href = "index.php";
-            },2500);
+            },3000);
         </script>
 	</div>
 
