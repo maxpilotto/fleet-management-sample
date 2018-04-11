@@ -1,5 +1,5 @@
 <html>
-<?php 
+<?php
 	session_start();
 	echo file_get_contents("defaultHead.html");
 	include_once("connection.php");
@@ -8,7 +8,7 @@
 
 <body>
 	<!-- Header -->
-	<?php 
+	<?php
 		include("defaultHeader.php");
 		include("defaultAuthCheck.php");
 	?>
@@ -45,7 +45,7 @@
 	</div>
 
 	<!-- Footer -->
-	<?php 
+	<?php
 		echo file_get_contents("defaultFooter.html");
 	?>
 </body>

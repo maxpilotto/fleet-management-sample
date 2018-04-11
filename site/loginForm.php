@@ -1,5 +1,5 @@
 <html>
-<?php 
+<?php
 	session_start();
 	echo file_get_contents("defaultHead.html");
 	include_once("connection.php");
@@ -7,7 +7,7 @@
 
 <body>
     <!-- Header -->
-	<?php 
+	<?php
 		include("defaultHeader.php");
 	?>
 
@@ -47,7 +47,7 @@
 				$row = mysqli_fetch_assoc($result);
 				$type = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM accounts a,accounttypes aa WHERE a.type = aa.id AND a.id = $row[id]"));
 				$company = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM companies WHERE id = $row[company]"));
-				
+
                 $_SESSION["logged"] = session_id();
                 $_SESSION["userId"] = $row["id"];
 				$_SESSION["company"] = $row["company"];
@@ -60,6 +60,7 @@
 				if ($row["company"] == ""){
 					$_SESSION["company"] = -1;
 				}
+
 				header("Location: index.php");
             }
         }
@@ -67,7 +68,7 @@
     </div>
 
     <!-- Footer -->
-	<?php 
+	<?php
 		echo file_get_contents("defaultFooter.html");
 	?>
 </body>

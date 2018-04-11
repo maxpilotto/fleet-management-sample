@@ -45,14 +45,14 @@ include_once("connection.php");
 
 			echo '
 				<table class="mui-table">
-				<thead>
-				<tr>
-				<th>Title</th>
-				<th>Code</th>
-				<th>Shipment</th>
-				<th>Status</th>
-				</tr>
-				</thead>
+					<thead>
+					<tr>
+					<th>Title</th>
+					<th>Code</th>
+					<th>Shipment</th>
+					<th>Status</th>
+					</tr>
+					</thead>
 				<tbody>';
 
 			foreach ($result as $row){
@@ -65,6 +65,9 @@ include_once("connection.php");
 				echo "<td>$row[status]</td>";
 				echo "</tr>";
 			}
+
+			echo "</tbody>";
+			echo "</table>";
 			?>
 
 		</tbody>

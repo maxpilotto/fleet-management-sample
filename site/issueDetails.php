@@ -28,7 +28,7 @@ include_once("connection.php");
 			}
 
 			if (mysqli_num_rows($result) == 0){
-				echo "No issues found";
+				echo "<h1><b>Issue not found</b></h1>";
 				return;
 			}
 
