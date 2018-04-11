@@ -28,7 +28,7 @@
         }
 
         foreach ($result as $row){
-            $text[] = $row['sender']." said: ".$row['text'];
+            $text[] = "<b>".$row['sender']."</b>: ".$row['text'];
         }
 
         if (mysqli_num_rows($result) <= 0){
