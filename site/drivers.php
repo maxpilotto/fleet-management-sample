@@ -23,11 +23,20 @@ include_once("connection.php");
         if (isset($_GET["id"])){
             $result = mysqli_query($conn,"SELECT * FROM drivers WHERE id = $_GET[id]");
 
+			if ($_SESSION["company"] == -1){
+				header("Location: pageNotFound.php");
+				return;
+			}
+
             if (mysqli_num_rows($result) == 0){
     			echo "Driver not found";
     		}else{
     			$row = mysqli_fetch_assoc($result);
 
+				if ($row["company"] != $_SESSION["company"]){
+					header("Location: pageNotFound.php");
+					return;
+				}
     			echo "<b>Name:</b> $row[name]<br />";
     			echo "<b>Surname:</b> $row[surname]<br />";
     		}

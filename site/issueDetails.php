@@ -22,6 +22,11 @@ include_once("connection.php");
 			<?php
 			$result = mysqli_query($conn,"SELECT * FROM issues WHERE id = $_GET[id]");
 
+			if ($_SESSION["company"] == -1){
+				header("Location: pageNotFound.php");
+				return;
+			}
+
 			if (mysqli_num_rows($result) == 0){
 				echo "No issues found";
 				return;
@@ -29,6 +34,11 @@ include_once("connection.php");
 
 			$row = mysqli_fetch_assoc($result);
 			$shipment = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM shipments WHERE id = $row[shipment]"));
+
+			if ($shipment["company"] != $_SESSION["company"]){
+				header("Location: pageNotFound.php");
+				return;
+			}
 
 			echo "<div class='mui-panel'>
 				<h2><b>Title</b></h2>

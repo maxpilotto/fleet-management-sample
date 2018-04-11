@@ -21,9 +21,21 @@
         <?php
             $result = mysqli_query($conn,"SELECT * FROM movements WHERE shipment = $_GET[id] ORDER BY movDate DESC");
 
+			if ($_SESSION["company"] == -1){
+				header("Location: pageNotFound.php");
+				return;
+			}
+
             if (mysqli_num_rows($result) == 0){
                 echo "<h1><b>No movements found</b></h1>";
             }else{
+				$ship = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM shipments WHERE id = $_GET[id]"));
+
+				if ($ship["company"] != $_SESSION["company"]){
+					header("Location: pageNotFound.php");
+					return;
+				}
+
 				echo "
 				<table class='mui-table'>
 					<thead>

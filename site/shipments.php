@@ -18,8 +18,13 @@
         <br />
         <br />
         <div class="mui-container">
-			<?php
+			<?php  //TODO remember to update each second the list
 				$result = mysqli_query($conn,"SELECT * FROM shipments WHERE company = $_SESSION[company]");
+
+				if ($_SESSION["company"] == -1){
+					header("Location: pageNotFound.php");
+					return;
+				}
 
 				if (mysqli_num_rows($result) == 0){
 					echo "<h1><b>No shipments found</b></h1>";
@@ -55,7 +60,7 @@
 					$status = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM shipmentstatuses WHERE id = $row[status]"));
 
 					echo "<tr>";
-					echo "<td><a href='truckInfo.php?id=$truck[id]'>$truck[brand], $truck[model]</a></td>";
+					echo "<td><a href='trucks.php?id=$truck[id]'>$truck[brand], $truck[model]</a></td>";
 					echo "<td><a href='drivers.php?id=$driver[id]'>$driver[name], $driver[surname]</a></td>";
 					echo "<td>$row[startDate]</td>";
 					echo "<td>$row[endDate]</td>";

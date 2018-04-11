@@ -20,8 +20,20 @@ include_once("connection.php");
 		<div class="mui-container">
 
 			<?php
+			if ($_SESSION["company"] == -1){
+				header("Location: pageNotFound.php");
+				return;
+			}
+			
 			if (isset($_GET["id"])){
 				$result = mysqli_query($conn,"SELECT * FROM issues WHERE shipment = $_GET[id]");
+				$ship = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM shipments WHERE id = $_GET[id]"));
+
+
+				if ($ship["company"] != $_SESSION["company"]){
+					header("Location: pageNotFound.php");
+					return;
+				}
 			}else{
 				$result = mysqli_query($conn,"SELECT * FROM issues i,shipments s WHERE i.shipment = s.id AND s.company = $_SESSION[company]");
 			}

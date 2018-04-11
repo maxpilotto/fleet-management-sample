@@ -3,13 +3,19 @@
     include_once("connection.php");
 
     if (!isset($_SESSION["logged"])){
-        if ($_SESSION["userType"] != 'e'){
+        if ($_SESSION["userType"] != 'e' or $_SESSION["userType"] != 'd'){
             header("Location: noAuth.php");
         }
     }
 
     $method = $_POST["method"];
     $chatId = $_POST["chatId"];
+    $ship = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM shipments WHERE id = $chatId"));
+
+    if ($_SESSION["company"] != $ship["company"] or $_SESSION["company"] == -1){
+        echo "[quit]";
+        return;
+    }
 
     if (strcmp($method,'update') == 0){
         $shipment = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM shipments WHERE id = $chatId"));
