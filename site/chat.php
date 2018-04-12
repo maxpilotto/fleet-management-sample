@@ -38,6 +38,7 @@ include_once("connection.php");
                 type: "POST",
                 url: "chatCore.php",
                 cache: false,
+				async: true,
                 data: {
                     'method': 'update',
                     'chatId': id,
@@ -45,6 +46,7 @@ include_once("connection.php");
                 },
                 success: function(data) {
                     console.log(data);
+					console.log(lastLine);
 
                     if (data == '[]'){
                         return;
@@ -52,6 +54,7 @@ include_once("connection.php");
 
                     if (data == '[quit]'){
                         window.location.href = "pageNotFound.php";
+						return;
                     }
 
                     var response = JSON.parse(data);
@@ -59,9 +62,9 @@ include_once("connection.php");
                     for (var i=0; i<response.length; i++){
                         $('#chat').append(response[i]);
                         $('#chat').append("<br />");
-                        lastLine++;
+						lastLine++;
                     }
-
+					
                     document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
                 },
             });
@@ -72,13 +75,13 @@ include_once("connection.php");
                 type: "POST",
                 url: "chatCore.php",
                 cache: false,
+				async: true,
                 data: {
                     method: "send",
                     chatId: id,
                     message: message
                 },
                 success: function(data) {
-                    update();
                     $("#text").attr("value", " ");
                 },
             });

@@ -2,7 +2,7 @@
 	/**
 	 * This php file will handle all the data from each single truck
 	 */
-	$conn = mysqli_connect("localhost","root","","fleet_db");
+	include_once("connection.php");
 	
 	$user = $_POST["user"];
 	$passwd = $_POST["passwd"];

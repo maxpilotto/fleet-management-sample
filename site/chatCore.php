@@ -19,7 +19,7 @@
 
     if (strcmp($method,'update') == 0){
         $shipment = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM shipments WHERE id = $chatId"));
-        $result = mysqli_query($conn,"SELECT * FROM messages WHERE shipment = $chatId LIMIT 18446744073709551610 OFFSET $_POST[lastLine]");
+		$result = mysqli_query($conn,"SELECT * FROM messages WHERE shipment = $chatId LIMIT $_POST[lastLine], 18446744073709551615");
         $text = array();
 
         if ($shipment["status"] == '1'){
@@ -30,7 +30,7 @@
         foreach ($result as $row){
             $text[] = "<b>".$row['sender']."</b>: ".$row['text'];
         }
-
+		
         if (mysqli_num_rows($result) <= 0){
             echo "[]";
         }else{
