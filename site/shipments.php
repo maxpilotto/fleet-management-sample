@@ -57,6 +57,7 @@
 					$movements = mysqli_query($conn,"SELECT * FROM movements WHERE shipment = $row[id] ORDER BY movDate DESC");
 					$issues = mysqli_query($conn,"SELECT * FROM issues WHERE shipment = $row[id]");
 					$lastMovement = mysqli_fetch_assoc($movements);
+					$lastPosition = "<a href='https://maps.google.com/?q=$lastMovement[latitude],$lastMovement[longitude]'>$lastMovement[latitude];$lastMovement[longitude]</a>";
 					$status = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM shipmentstatuses WHERE id = $row[status]"));
 
 					echo "<tr>";
@@ -67,7 +68,7 @@
 					echo "<td>$row[startTime]</td>";
 					echo "<td>$row[endTime]</td>";
 					echo "<td>$row[destination]</td>";
-					echo "<td>".$lastMovement["place"]."</td>";
+					echo "<td>".$lastPosition."</td>";
 					echo "<td><a href='movements.php?id=$row[id]'>".mysqli_num_rows($movements)."</a></td>";
 					echo "<td><a href='issues.php?id=$row[id]'>".mysqli_num_rows($issues)."</a></td>";
 					echo "<td>$status[name]</td>";

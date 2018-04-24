@@ -97,7 +97,7 @@
 
                     if ($currentShipment != -1){
                         $lastMovement = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM movements WHERE shipment = $currentShipment ORDER BY movDate DESC"));
-						$lastSeen = $lastMovement["place"];
+						$lastSeen = "<a href='https://maps.google.com/?q=$lastMovement[latitude],$lastMovement[longitude]'>$lastMovement[latitude];$lastMovement[longitude]</a>";
                     }
 
                     echo "<tr>

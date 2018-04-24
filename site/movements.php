@@ -44,7 +44,6 @@
 							<th>Time</th>
 							<th>Position</th>
 							<th>Speed</th>
-							<th>Place</th>
 						</tr>
 					</thead>
 				<tbody>";
@@ -57,7 +56,6 @@
 					echo "<td>$row[movTime]</td>";
 					echo "<td> <a href='https://maps.google.com/?q=$row[latitude],$row[longitude]'>$row[latitude];$row[longitude]</a> </td>";
 					echo "<td>$row[speed]</td>";
-					echo "<td>$row[place]</td>";
 					echo "</tr>";
 				}
 
