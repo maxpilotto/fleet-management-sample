@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Apr 11, 2018 alle 22:02
+-- Creato il: Apr 25, 2018 alle 23:09
 -- Versione del server: 10.1.28-MariaDB
 -- Versione PHP: 7.1.10
 
@@ -179,21 +179,20 @@ CREATE TABLE `movements` (
   `latitude` float DEFAULT NULL,
   `longitude` float DEFAULT NULL,
   `speed` float DEFAULT NULL,
-  `shipment` int(11) DEFAULT NULL,
-  `place` varchar(30) NOT NULL
+  `shipment` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dump dei dati per la tabella `movements`
 --
 
-INSERT INTO `movements` (`id`, `movDate`, `movTime`, `latitude`, `longitude`, `speed`, `shipment`, `place`) VALUES
-(1, '2018-04-02', '00:00:00', 52252400, 525253000, 56, 1, 'Via roma'),
-(2, '2018-04-03', '00:00:00', 36636500, 3636660000, 90, 1, 'Via napoli'),
-(3, '2018-04-09', '00:00:00', 783738000, 3757380000, 45, 2, 'Via roma'),
-(4, '2018-04-11', '00:00:00', 834578000, 383435000, 67, 2, 'Via napoli'),
-(5, '2018-04-17', '00:00:00', 252525, 234135000, 12, 3, 'Via milano'),
-(6, '2018-04-05', '00:00:00', 2345250000, 25352500, 34, 1, 'Pordenone');
+INSERT INTO `movements` (`id`, `movDate`, `movTime`, `latitude`, `longitude`, `speed`, `shipment`) VALUES
+(1, '2018-04-02', '00:00:00', 52252400, 525253000, 56, 1),
+(2, '2018-04-03', '00:00:00', 36636500, 3636660000, 90, 1),
+(3, '2018-04-09', '00:00:00', 783738000, 3757380000, 45, 2),
+(4, '2018-04-11', '00:00:00', 834578000, 383435000, 67, 2),
+(5, '2018-04-17', '00:00:00', 252525, 234135000, 12, 3),
+(6, '2018-04-05', '00:00:00', 2345250000, 25352500, 34, 1);
 
 -- --------------------------------------------------------
 
