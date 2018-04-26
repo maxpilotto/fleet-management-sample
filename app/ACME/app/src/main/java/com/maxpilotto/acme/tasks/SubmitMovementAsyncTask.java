@@ -14,21 +14,29 @@ import java.net.URL;
  * Date: 24/04/2018 @ 20:47
  * Package: com.maxpilotto.acme.tasks
  */
-public class SubmitMovementAsyncTask extends AsyncTask<Void,Void,Update> {
+public class SubmitMovementAsyncTask extends AsyncTask<Void,Void,Void> {
     private Update update;
+	private String username;
+	private String password;
 
     public SubmitMovementAsyncTask(Update update,String username,String password){
         this.update = update;
+		this.username = username;
+		this.password = password;
     }
 
     @Override
-    protected Update doInBackground(Void... voids) {
+    protected Void doInBackground(Void... voids) {
         try {
             HttpURLConnection connection = (HttpURLConnection) new URL("http://localhost:80/fleet-management-sample/site/service/submitMovement.php").openConnection();
-
+			StringBuffer buffer = new StringBuffer();
+			
+			
             connection.setDoOutput(true);
             connection.setDoInput(true);
             connection.setRequestMethod("POST");
+			connection.addRequestProperty("username",username);
+			connection.addRequestProperty("passwd",password);
             connection.addRequestProperty("movDate",update.getDate().toString());
             connection.addRequestProperty("movTime",update.getTime().toString());
             connection.addRequestProperty("latitude",String.valueOf(update.getLatitude()));
@@ -48,7 +56,7 @@ public class SubmitMovementAsyncTask extends AsyncTask<Void,Void,Update> {
     }
 
     @Override
-    protected void onPostExecute(Update update) {
-        super.onPostExecute(update);
+    protected void onPostExecute(Void void) {
+        super.onPostExecute(void);
     }
 }
