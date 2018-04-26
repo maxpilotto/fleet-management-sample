@@ -6,12 +6,7 @@
 	$user = mysqli_query($conn,"SELECT * FROM accounts WHERE username = '$_POST[user]' AND passwd = '$_POST[pass]'");
 	
 	if (mysqli_num_rows($user) == 0){
-		$resp = array(
-			"status" => 400,
-			"message" => "Unauthorized access"
-		);
-		
-		echo json_encode($resp);
+		include("authError.php");
 	}else{
 		mysqli_query($conn,"INSERT INTO movements VALUES(
 			null,
