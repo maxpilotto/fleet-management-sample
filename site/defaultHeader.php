@@ -19,6 +19,7 @@ This is the default header and it is included in all pages but the index
 				<td class="mui--text-right">
 					<ul class="mui-list--inline mui--text-body2">
 						<?php
+						//TODO check if the company is active or not
 						if (isset($_SESSION["logged"])){
 							if ($_SESSION["userType"] == 'm'){
 								echo '<li><a href="companies.php">Companies</a></li>';
