@@ -67,13 +67,9 @@ include_once("connection.php");
 			}
 		}else{
 			echo file_get_contents("acmeHome.html");
-			echo "<form method='post'>";
+			echo "<form method='post' action='submitCompany.php'>";
 			echo "<input type='submit' class='mui-btn mui-btn--primary' name='join' id='join' value='I want to join RIGHT NOW!'/>";
 			echo "</form>";
-
-			if (isset($_POST["join"])){
-				echo "Request sent correctly, your company will be online in a couple of hours!";
-			}
 		}
 		?>
 	</div>
