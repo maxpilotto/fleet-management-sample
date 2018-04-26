@@ -55,8 +55,6 @@
 				$_SESSION["userType"] = $type["code"];
                 $_SESSION["user"] = $username;
 
-				file_put_contents("test",$row["company"]);
-
 				if ($row["company"] == ""){
 					$_SESSION["company"] = -1;
 				}
