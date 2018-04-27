@@ -8,5 +8,7 @@
 			"error" => $error,
 			"params" => $params
 		);
+
+		return $response;
 	}
 ?>
