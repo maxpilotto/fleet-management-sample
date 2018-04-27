@@ -6,7 +6,7 @@
 			"status" => $status,
 			"message" => $message,
 			"error" => $error,
-			"params" => $params
+			"params" => array($params)
 		);
 
 		return $response;
