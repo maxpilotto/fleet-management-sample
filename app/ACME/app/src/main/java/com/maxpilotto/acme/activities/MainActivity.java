@@ -10,9 +10,16 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.maxpilotto.acme.R;
+import com.maxpilotto.acme.tasks.RequestDriverInfo;
+import com.maxpilotto.acme.utils.ACMEHttpResponseListener;
+import com.maxpilotto.acme.utils.HttpResponse;
+import com.maxpilotto.acme.utils.HttpResponseParser;
+
+import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             //TODO Allow user to logout
         }
-
+/*
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this,"Location not available, please enable location in app's permissions",Toast.LENGTH_LONG).show();
         }else{
@@ -57,7 +64,19 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-        }
+        }*/
+
+        RequestDriverInfo request = new RequestDriverInfo("driv1", "pass", new ACMEHttpResponseListener() {
+            @Override
+            public void onResponseReceived(String response) {
+                try {
+                    HttpResponse r = HttpResponseParser.parse(response,"shipmentId");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        request.execute();
 
     }
 }
