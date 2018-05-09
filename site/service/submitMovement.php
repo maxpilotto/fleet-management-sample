@@ -8,25 +8,39 @@
 	//TODO Check if the user is a driver
 
 	if (mysqli_num_rows($user) == 0){
-		echo json_encode( createHttpResponse(400,"Unauthorized access","User not found") );
+		$response = array(
+			"status" => 400,
+			"message" => "Unauthorized access",
+			"error" => "User not found"
+		);
+		echo json_encode($response);
 	}else{
-		$query = mysqli_query($conn,"INSERT INTO movements VALUES(
-			null,
+		$query = mysqli_query($conn,"INSERT INTO movements(`movDate`, `movTime`, `latitude`, `longitude`, `speed`, `shipment`)
+			VALUES(
 			'$_POST[movDate]',
 			'$_POST[movTime]',
 			$_POST[latitude],
 			$_POST[longitude],
 			$_POST[speed],
-			$_POST[shipment],
-			'$_POST[place]',
+			$_POST[shipment]
 		)");
-/*
-		$resp = array(
-			"status" => 200,
-			"message" => "Ok",
-			"error" => $conn->error
-		);*/
 
-		echo json_encode( createHttpResponse(200,"Ok","") );
+		if ($query){
+			$response = array(
+				"status" => 200,
+				"message" => "Ok",
+				"error" => ""
+			);
+		
+			echo json_encode($response);
+		}else{
+			$response = array(
+				"status" => 500,
+				"message" => "Query error",
+				"error" => mysqli_error($conn)
+			);
+		
+			echo json_encode($response);
+		}
 	}
 ?>
