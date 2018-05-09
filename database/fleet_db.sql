@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Apr 27, 2018 alle 21:01
+-- Creato il: Mag 09, 2018 alle 23:21
 -- Versione del server: 10.1.28-MariaDB
 -- Versione PHP: 7.1.10
 
@@ -193,7 +193,11 @@ INSERT INTO `movements` (`id`, `movDate`, `movTime`, `latitude`, `longitude`, `s
 (3, '2018-04-09', '00:00:00', 783738000, 3757380000, 45, 2),
 (4, '2018-04-11', '00:00:00', 834578000, 383435000, 67, 2),
 (5, '2018-04-17', '00:00:00', 252525, 234135000, 12, 3),
-(6, '2018-04-05', '00:00:00', 2345250000, 25352500, 34, 1);
+(6, '2018-04-05', '00:00:00', 2345250000, 25352500, 34, 1),
+(7, '2018-05-09', '18:19:32', 33.422, -122.084, 68, 1),
+(8, '2018-05-09', '18:38:54', 33.422, -122.084, 75, 1),
+(9, '2018-05-09', '18:39:02', 33.422, -123.084, 105, 1),
+(10, '2018-05-09', '18:39:08', 32.422, -123.084, 82, 1);
 
 -- --------------------------------------------------------
 
@@ -219,7 +223,7 @@ CREATE TABLE `shipments` (
 --
 
 INSERT INTO `shipments` (`id`, `truck`, `driver`, `startDate`, `endDate`, `startTime`, `endTime`, `destination`, `company`, `status`) VALUES
-(1, 1, 1, '2018-04-01', '2018-04-05', '00:00:00', '00:00:00', 'Pordenone', 1, 1),
+(1, 1, 1, '2018-04-01', '2018-04-05', '00:00:00', '00:00:00', 'Pordenone', 1, 2),
 (2, 1, 1, '2018-04-08', '2018-04-12', '00:00:00', '00:00:00', 'Roma', 1, 2),
 (3, 2, 2, '2018-04-22', '2018-04-25', '00:00:00', '00:00:00', 'Milano', 2, 2);
 
@@ -388,7 +392,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT per la tabella `movements`
 --
 ALTER TABLE `movements`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT per la tabella `shipments`
