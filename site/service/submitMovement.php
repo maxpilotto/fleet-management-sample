@@ -3,7 +3,7 @@
 	 * This php file will handle all the data from each single truck
 	 */
 	include_once("../connection.php");
-	$user = mysqli_query($conn,"SELECT * FROM accounts WHERE username = '$_POST[user]' AND passwd = '$_POST[pass]'");
+	$user = mysqli_query($conn,"SELECT * FROM accounts WHERE username = '$_POST[username]' AND passwd = '$_POST[passwd]'");
 
 	//TODO Check if the user is a driver
 
