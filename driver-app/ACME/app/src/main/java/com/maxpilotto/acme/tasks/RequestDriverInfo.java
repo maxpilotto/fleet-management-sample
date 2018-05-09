@@ -1,10 +1,14 @@
 package com.maxpilotto.acme.tasks;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-import com.maxpilotto.acme.utils.ACMEHttpResponseListener;
+import com.maxpilotto.acme.utils.HttpResponse;
+import com.maxpilotto.acme.utils.HttpResponseParser;
 import com.maxpilotto.acme.utils.Utils;
+
+import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,10 +22,20 @@ import java.net.URL;
  * Date: 27/04/2018 @ 18:00
  * Package: com.maxpilotto.acme.tasks
  */
-public class RequestDriverInfo extends ACMEHttpRequest {
+public class RequestDriverInfo extends AsyncTask<Void,Void,String> {
+    public interface RequestListener{
+        void onReceive(HttpResponse response);
+    }
 
-    public RequestDriverInfo(String username, String password, @NonNull ACMEHttpResponseListener listener) {
-        super(username, password, listener);
+    private RequestListener listener;
+    private String username;
+    private String password;
+
+
+    public RequestDriverInfo(String username, String password, @NonNull RequestListener listener) {
+        this.username = username;
+        this.password = password;
+        this.listener = listener;
     }
 
     @Override
@@ -58,5 +72,16 @@ public class RequestDriverInfo extends ACMEHttpRequest {
         }
 
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+
+        try {
+            listener.onReceive(HttpResponseParser.parse(s));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }
