@@ -1,5 +1,7 @@
 package com.maxpilotto.acme.utils;
 
+import org.json.JSONObject;
+
 /**
  * Project: ACME
  * Created by: Max
@@ -7,23 +9,26 @@ package com.maxpilotto.acme.utils;
  * Package: com.maxpilotto.acme.utils
  */
 public class HttpResponse{
+    public static final int CODE_OK = 200;
+    public static final int CODE_NO_AUTH = 400;
+
     private int code;
     private String message;
     private String error;
-    private String[] parameters;
+    private JSONObject object;
 
     public HttpResponse(int code, String message, String error) {
         this.code = code;
         this.message = message;
         this.error = error;
-        this.parameters = null;
+        this.object = null;
     }
 
-    public HttpResponse(int code, String message, String error, String[] parameters) {
+    public HttpResponse(int code, String message, String error, JSONObject object) {
         this.code = code;
         this.message = message;
         this.error = error;
-        this.parameters = parameters;
+        this.object = object;
     }
 
     public int getCode() {
@@ -50,11 +55,11 @@ public class HttpResponse{
         this.error = error;
     }
 
-    public String[] getParameters() {
-        return parameters;
+    public JSONObject getObject() {
+        return object;
     }
 
-    public void setParameters(String[] parameters) {
-        this.parameters = parameters;
+    public void setObject(JSONObject object) {
+        this.object = object;
     }
 }
