@@ -5,16 +5,43 @@
 	//TODO Hash all passwords
 
 	if (mysqli_num_rows($result) == 0){
-		echo json_encode( createHttpResponse(400,"Unauthorized access","User not found") );
+		$response = array(
+			"status" => 400,
+			"message" => "Unauthorized access",
+			"error" => "User not found"
+		);
+		
+		echo json_encode($response);
 	}else{
 		$result = mysqli_fetch_assoc($result);
-		$query = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM shipments WHERE driver = $result[driverId] AND status <> 1"));
+		$query = mysqli_query($conn,"SELECT * FROM shipments WHERE driver = $result[driverId] AND status <> 1");
 
-		//TODO return also the driver's name and surname since the clients only sends the credentials and doesn't know which driver is logged
-
-		echo json_encode( createHttpResponse(200,"Ok","",array(
-				"shipmentId" => $query["id"]
-			))
-		);
+		if (mysqli_num_rows($query) > 0){
+			$query = mysqli_fetch_assoc($query);
+			
+			$response = array(
+				"status" => 200,
+				"message" => "Ok",
+				"error" => "",
+				"shipmentId" => $query["id"],
+				"name" => $result["name"],
+				"surname" => $result["surname"],
+				"destination" => $query["destination"]
+			);
+			
+			echo json_encode($response);
+		}else{
+			$response = array(
+				"status" => 200,
+				"message" => "Ok",
+				"error" => "",
+				"shipmentId" => 0,
+				"name" => $result["name"],
+				"surname" => $result["surname"],
+				"destination" => "None, waiting for a new shipment"
+			);
+			
+			echo json_encode($response);
+		}
 	}
 ?>
