@@ -1,30 +1,23 @@
 package com.maxpilotto.acme.activities;
 
-import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.maxpilotto.acme.R;
 import com.maxpilotto.acme.tasks.RequestDriverInfo;
-import com.maxpilotto.acme.utils.ACMEHttpResponseListener;
 import com.maxpilotto.acme.utils.HttpResponse;
-import com.maxpilotto.acme.utils.HttpResponseParser;
 
 import org.json.JSONException;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final int REQUEST_LOGIN_CODE = 10;
     private SharedPreferences preferences;
-    private LocationManager locationManager;
+    private int shipmentId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,51 +25,48 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        if (preferences.getString("username", null) == null) {
-            //TODO Ask user to login
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (!preferences.getBoolean("logged", false)) {
+            startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN_CODE);
         } else {
-            //TODO Allow user to logout
-        }
-/*
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this,"Location not available, please enable location in app's permissions",Toast.LENGTH_LONG).show();
-        }else{
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, new LocationListener() {
+            RequestDriverInfo request = new RequestDriverInfo(preferences.getString("username", ""), preferences.getString("password", ""), new RequestDriverInfo.RequestListener() {
                 @Override
-                public void onLocationChanged(Location location) {
+                public void onReceive(HttpResponse response) {
+                    if (response.getCode() == HttpResponse.CODE_OK) {
+                        try {
+                            shipmentId = response.getObject().getInt("shipmentId");
 
-                }
-
-                @Override
-                public void onStatusChanged(String s, int i, Bundle bundle) {
-
-                }
-
-                @Override
-                public void onProviderEnabled(String s) {
-
-                }
-
-                @Override
-                public void onProviderDisabled(String s) {
-
+                            ((TextView) findViewById(R.id.user)).setText(String.format("Hello %s",preferences.getString("username","")));
+                            ((TextView) findViewById(R.id.destination)).setText(String.format("Current destination: %s",response.getObject().getString("destination")));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 }
             });
-        }*/
+            request.execute();
+        }
+    }
 
-        RequestDriverInfo request = new RequestDriverInfo("driv1", "pass", new ACMEHttpResponseListener() {
-            @Override
-            public void onResponseReceived(String response) {
-                try {
-                    HttpResponse r = HttpResponseParser.parse(response,"shipmentId");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_LOGIN_CODE) {
+            if (resultCode == LoginActivity.RESULT_OK) {
+                preferences.edit().putBoolean("logged", true).apply();
+                preferences.edit().putString("username", data.getStringExtra("username")).apply();
+                preferences.edit().putString("password", data.getStringExtra("password")).apply();
+                shipmentId = data.getIntExtra("shipmentId", 0);
+
+                ((TextView) findViewById(R.id.user)).setText(String.format("Hello %s",data.getStringExtra("username")));
+                ((TextView) findViewById(R.id.destination)).setText(String.format("Current destination: %s",data.getStringExtra("destination")));
+            } else {
+                Toast.makeText(this, "Wrong username or password", Toast.LENGTH_SHORT).show();
+                startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN_CODE);
             }
-        });
-        request.execute();
 
+        }
     }
 }
