@@ -1,6 +1,6 @@
 <?php
 	include_once("../connection.php");
-	$result = mysqli_query($conn,"SELECT a.*,d.id as driverId FROM accounts as a,drivers as d WHERE d.account = a.id AND username = '$_POST[username]' AND passwd = '$_POST[passwd]'");
+	$result = mysqli_query($conn,"SELECT a.*,d.name,d.surname,d.id as driverId FROM accounts as a,drivers as d WHERE d.account = a.id AND username = '$_POST[username]' AND passwd = '$_POST[passwd]'");
 
 	//TODO Hash all passwords
 
